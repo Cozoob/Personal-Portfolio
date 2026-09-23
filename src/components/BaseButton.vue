@@ -7,7 +7,7 @@ defineEmits(["click"]);
 const props = defineProps({
   text: {
     type: String,
-    default: "",
+    default: null,
   },
   variant: {
     type: String,
@@ -17,8 +17,18 @@ const props = defineProps({
     },
   },
   iconName: {
-    type: [String, null],
+    type: String,
     default: null,
+  },
+  iconAriaLabel: {
+    type: String,
+    default: "The icon button.",
+    validator(value, props) {
+      if (props.iconName != null) {
+        return !!value;
+      }
+      return true;
+    },
   },
 });
 
@@ -36,15 +46,17 @@ const isOutline = computed(() => props.variant === "outline");
     }"
     @click="$emit('click', $event)"
   >
-    <span>{{ text }}</span>
+    <span v-if="text">{{ text }}</span>
     <Icon
       v-if="iconName"
       class="button__icon"
       :class="{
+        'button__icon--with-text': text,
         'button__icon--primary': isPrimary,
         'button__icon--outline': isOutline,
       }"
       :icon="iconName"
+      :aria-label="iconAriaLabel"
       inline
     />
   </button>
@@ -90,7 +102,10 @@ const isOutline = computed(() => props.variant === "outline");
 
   &__icon {
     font-size: var(--text-size-body-sm);
-    padding-left: 5px;
+
+    &--with-text {
+      padding-left: 5px;
+    }
 
     &--primary {
       color: white;

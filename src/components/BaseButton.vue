@@ -34,7 +34,7 @@ const isOutline = computed(() => props.variant === "outline");
       'button--primary': isPrimary,
       'button--outline': isOutline,
     }"
-    @click="$emit('click')"
+    @click="$emit('click', $event)"
   >
     <span>{{ text }}</span>
     <Icon
@@ -45,7 +45,7 @@ const isOutline = computed(() => props.variant === "outline");
         'button__icon--outline': isOutline,
       }"
       :icon="iconName"
-      inline="true"
+      inline
     />
   </button>
 </template>

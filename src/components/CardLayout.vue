@@ -1,9 +1,9 @@
 <template>
   <div class="card">
-    <div>
+    <div v-if="$slots.card_header">
       <slot name="card_header"></slot>
     </div>
-    <div>
+    <div v-if="$slots.card_details">
       <slot name="card_details"></slot>
     </div>
   </div>

@@ -1,10 +1,10 @@
 import { defineStore } from "pinia";
-import { computed, ref } from "vue";
+import { computed, ref, shallowRef } from "vue";
 
 export const useProjectStore = defineStore("projects", () => {
   const projects = ref([]);
-  const loading = ref(false);
-  const error = ref(null);
+  const loading = shallowRef(false);
+  const error = shallowRef(null);
 
   const totalProjects = computed(() => projects.value.length);
   const getProjectById = computed(() => {
@@ -27,12 +27,15 @@ export const useProjectStore = defineStore("projects", () => {
           description: "Super opis raz dwa trzy",
           tags: [
             {
+              id: "tag1",
               text: "Technologia 1",
             },
             {
+              id: "tag2",
               text: "Technologia 2",
             },
             {
+              id: "tag3",
               text: "Technologia XYZ",
             },
           ],

@@ -9,7 +9,9 @@ const toggleDark = useToggle(isDark);
 
 <template>
   <p>Dark theme: {{ isDark }}</p>
-  <button type="button" @click="toggleDark()">Toggle theme</button>
+  <button type="button" :aria-pressed="isDark"  @click="toggleDark()">
+    Toggle theme
+  </button>
 
   <ProjectList />
 </template>

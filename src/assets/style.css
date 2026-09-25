@@ -1,6 +1,7 @@
 :root {
     --bg-primary: #ffffff;
     --bg-secondary: #f8fafc;
+    --bg-tertiary: #e2e8f0;
     --text-primary: #1e293b;
     --accent-primary: #6366f1;
     --accent-secondary: #8b5cf6;
@@ -11,6 +12,7 @@
     --text-size-body-lg: 1.125rem;
     --text-size-body-base: 1rem;
     --text-size-body-sm: 0.875rem;
+    --text-size-body-xs: 0.75rem;
     --space-3xl: 4rem;
     --space-2xl: 3rem;
     --space-xl: 2rem;
@@ -18,14 +20,20 @@
     --space-md: 1rem;
     --space-sm: 0.5rem;
     --space-xs: 0.25rem;
+    --radius-full: 99999px;
 }
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg-primary: #0f172a;
-        --bg-secondary: #1e293b;
-        --text-primary: #f1f5f9;
-    }
+html.dark {
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --bg-tertiary: #334155;
+    --text-primary: #f1f5f9;
+}
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {

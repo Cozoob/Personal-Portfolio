@@ -1,7 +1,7 @@
 <script setup>
 import { useDark, useToggle } from "@vueuse/core";
-import CardLayout from "./components/CardLayout.vue";
-import ProjectCard from "./components/ProjectCard.vue";
+// import ProjectCard from "./components/ProjectCard.vue";
+import ProjectList from "./components/ProjectList.vue";
 
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
@@ -11,5 +11,5 @@ const toggleDark = useToggle(isDark);
   <p>Dark theme: {{ isDark }}</p>
   <button type="button" @click="toggleDark()">Toggle theme</button>
 
-  <ProjectCard></ProjectCard>
+  <ProjectList />
 </template>

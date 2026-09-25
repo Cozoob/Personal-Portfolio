@@ -20,6 +20,13 @@ const props = defineProps({
     type: String,
     default: null,
   },
+  iconSize: {
+    type: String,
+    default: "base",
+    validator(value) {
+      return ["small", "base", "large"].includes(value);
+    },
+  },
   iconAriaLabel: {
     type: String,
     default: "The icon button.",
@@ -34,6 +41,8 @@ const props = defineProps({
 
 const isPrimary = computed(() => props.variant === "primary");
 const isOutline = computed(() => props.variant === "outline");
+const isIconSmall = computed(() => props.iconSize === "small");
+const isIconLarge = computed(() => props.iconSize === "large");
 </script>
 
 <template>
@@ -54,6 +63,8 @@ const isOutline = computed(() => props.variant === "outline");
         'button__icon--with-text': text,
         'button__icon--primary': isPrimary,
         'button__icon--outline': isOutline,
+        'button__icon--small': isIconSmall,
+        'button__icon--large': isIconLarge,
       }"
       :icon="iconName"
       :aria-label="iconAriaLabel"
@@ -68,6 +79,9 @@ const isOutline = computed(() => props.variant === "outline");
   border-radius: 0.5rem;
   font-size: var(--text-size-body-sm);
   transition: all 150ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &--primary {
     border: 2px solid var(--accent-primary);
@@ -101,7 +115,15 @@ const isOutline = computed(() => props.variant === "outline");
   }
 
   &__icon {
-    font-size: var(--text-size-body-sm);
+    font-size: var(--text-size-body-base);
+
+    &--small {
+      font-size: var(--text-size-body-sm);
+    }
+
+    &--large {
+      font-size: var(--text-size-body-lg);
+    }
 
     &--with-text {
       padding-left: 5px;

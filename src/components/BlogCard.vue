@@ -3,6 +3,7 @@ import CardLayout from "./CardLayout.vue";
 import BaseTag from "./BaseTag.vue";
 import BaseButton from "./BaseButton.vue";
 import { computed } from "vue";
+import { useDateFormatter } from "../composable/useDateFormatter.js";
 
 const props = defineProps({
   thumbnailUrl: {
@@ -33,22 +34,7 @@ const props = defineProps({
   },
 });
 
-const dateOptions = {
-  month: "short",
-  day: "numeric",
-  year: "numeric",
-};
-const locales = "en-US";
-
-const formattedCreatedDate = computed(() => {
-  const date = props.createdDate;
-
-  if (date) {
-    return date.toLocaleDateString(locales, dateOptions);
-  }
-  return "";
-});
-
+const { formattedDate: formattedCreatedDate } = useDateFormatter(() => props.createdDate);
 const formattedReadTimeText = computed(() => {
   if (props.readTimeInMinutes > 1) {
     return `${props.readTimeInMinutes} mins read`;

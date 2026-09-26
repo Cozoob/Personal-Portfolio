@@ -8,7 +8,7 @@ const props = defineProps({
   },
   name: {
     type: String,
-    default: "certificatiom",
+    default: "certification",
   },
   issuedDate: {
     type: Date,

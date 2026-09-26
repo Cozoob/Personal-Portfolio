@@ -2,8 +2,9 @@
 import CardLayout from "./CardLayout.vue";
 import BaseTag from "./BaseTag.vue";
 import BaseButton from "./BaseButton.vue";
+import { computed } from "vue";
 
-defineProps({
+const props = defineProps({
   thumbnailUrl: {
     type: String,
     default: null,
@@ -22,6 +23,38 @@ defineProps({
       return [];
     },
   },
+  readTimeInMinutes: {
+    type: Number,
+    default: 1,
+  },
+  createdDate: {
+    type: Date,
+    default: null,
+  },
+});
+
+const dateOptions = {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+};
+const locales = "en-US";
+
+const formattedCreatedDate = computed(() => {
+  const date = props.createdDate;
+
+  if (date) {
+    return date.toLocaleDateString(locales, dateOptions);
+  }
+  return "";
+});
+
+const formattedReadTimeText = computed(() => {
+  if (props.readTimeInMinutes > 1) {
+    return `${props.readTimeInMinutes} mins read`;
+  }
+
+  return `${props.readTimeInMinutes} min read`;
 });
 </script>
 
@@ -37,12 +70,23 @@ defineProps({
     </template>
     <template #card_details>
       <div class="card__details details">
+        <div class="details__blog-meta">
+          <time :datetime="createdDate?.toISOString()">{{
+            formattedCreatedDate
+          }}</time>
+          <span v-if="createdDate">•</span>
+          <span>{{ formattedReadTimeText }}</span>
+        </div>
         <h3>{{ title }}</h3>
         <p>{{ description }}</p>
         <div class="details__tags">
           <BaseTag v-for="tag in tags" :key="tag.id" :text="tag.text" />
         </div>
-        <BaseButton variant="primary" text="View Case Study"></BaseButton>
+        <BaseButton
+          variant="primary"
+          text="View"
+          icon-name="at-icons:arrow-right"
+        />
       </div>
     </template>
   </CardLayout>
@@ -59,7 +103,7 @@ defineProps({
     aspect-ratio: 16/9;
 
     &--no-image {
-      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -82,6 +126,13 @@ defineProps({
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
+
+  &__blog-meta {
+    font-size: var(--text-size-body-sm);
+    font-weight: lighter;
+    display: flex;
+    gap: var(--space-xs);
+  }
 
   &__tags {
     display: flex;

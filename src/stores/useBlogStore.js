@@ -19,6 +19,7 @@ export const useBlogStore = defineStore("blogs", () => {
   const blogs = computed(() => {
     return rawBlogs.value.map((blog) => ({
       ...blog,
+      id: blog?.id,
       createdDate: blog?.createdDate?.toDate(),
     }));
   })
@@ -32,6 +33,7 @@ export const useBlogStore = defineStore("blogs", () => {
   }
 
   return {
+    rawBlogs,
     blogs,
     loading,
     error,

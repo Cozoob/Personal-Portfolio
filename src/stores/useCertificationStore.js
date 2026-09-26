@@ -19,6 +19,7 @@ export const useCertificationStore = defineStore("certifications", () => {
   const certifications = computed(() => {
     return rawCertifications.value.map((project) => ({
       ...project,
+      id: project?.id,
       issuedDate: project?.issuedDate?.toDate()
     }));
   });
@@ -32,6 +33,7 @@ export const useCertificationStore = defineStore("certifications", () => {
   }
 
   return {
+    rawCertifications,
     certifications,
     loading,
     error,

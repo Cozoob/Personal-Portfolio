@@ -19,7 +19,7 @@ onMounted(() => {
       <h2>Number of blogs: {{ totalBlogs }}</h2>
     </header>
 
-    <div v-if="loading">Loading projects...</div>
+    <div v-if="loading">Loading blogs...</div>
     <div v-else-if="error">{{ error }}</div>
     <div v-else>
       <BlogCard

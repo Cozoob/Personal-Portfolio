@@ -64,8 +64,8 @@ export const useBlogStore = defineStore("blogs", () => {
         },
       ];
     } catch (err) {
-      console.error("Failed to load projects:", err);
-      error.value = "Failed to load projects. Please try again later.";
+      console.error("Failed to load blogs:", err);
+      error.value = "Failed to load blogs. Please try again later.";
     } finally {
       loading.value = false;
     }

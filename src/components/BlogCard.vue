@@ -71,7 +71,9 @@ const formattedReadTimeText = computed(() => {
     <template #card_details>
       <div class="card__details details">
         <div class="details__blog-meta">
-          <time :datetime="createdDate">{{ formattedCreatedDate }}</time>
+          <time :datetime="createdDate?.toISOString()">{{
+            formattedCreatedDate
+          }}</time>
           <span v-if="createdDate">•</span>
           <span>{{ formattedReadTimeText }}</span>
         </div>
@@ -114,7 +116,10 @@ const formattedReadTimeText = computed(() => {
 }
 
 .image {
+  display: block;
   width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .details {

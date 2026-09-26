@@ -1,10 +1,18 @@
 import { defineStore } from "pinia";
-import { computed, ref, shallowRef } from "vue";
+import { collection } from 'firebase/firestore';
+import { computed } from "vue";
+import { firestore } from "../firebase/index.js";
+import { useCollection } from "vuefire";
 
 export const useProjectStore = defineStore("projects", () => {
-  const projects = ref([]);
-  const loading = shallowRef(false);
-  const error = shallowRef(null);
+  const projectsRef = collection(firestore, "projects");
+
+  const {
+    data: projects,
+    pending: loading,
+    error,
+    promise,
+  } = useCollection(projectsRef);
 
   const totalProjects = computed(() => projects.value.length);
   const getProjectById = computed(() => {
@@ -12,81 +20,10 @@ export const useProjectStore = defineStore("projects", () => {
   });
 
   async function loadProjects() {
-    if (projects.value.length > 0) return;
-
-    loading.value = true;
-    error.value = null;
-
     try {
-      // projects.value = await projectService.fetchAllProjects()
-      projects.value = [
-        {
-          id: "1",
-          thumbnailUrl: "",
-          title: "Super projekt",
-          description: "Super opis raz dwa trzy",
-          tags: [
-            {
-              id: "tag1",
-              text: "Technologia 1",
-            },
-            {
-              id: "tag2",
-              text: "Technologia 2",
-            },
-            {
-              id: "tag3",
-              text: "Technologia XYZ",
-            },
-          ],
-        },
-        {
-          id: "2",
-          thumbnailUrl:
-            "https://img.magnific.com/free-photo/little-cat-sitting-grass_1150-17019.jpg?semt=ais_hybrid&w=740&q=80",
-          title: "Super projekt 2",
-          description: "Super opis raz dwa trzy !!!",
-          tags: [
-            {
-              id: "tag1",
-              text: "Technologia 1",
-            },
-            {
-              id: "tag2",
-              text: "Technologia 2",
-            },
-            {
-              id: "tag3",
-              text: "Technologia XYZ",
-            },
-          ],
-        },
-        {
-          id: "3",
-          thumbnailUrl: "",
-          title: "Super projekt 3",
-          description: "Super opis raz dwa trzy !!!",
-          tags: [
-            {
-              id: "tag1",
-              text: "Technologia 1",
-            },
-            {
-              id: "tag2",
-              text: "Technologia 2",
-            },
-            {
-              id: "tag3",
-              text: "Technologia XYZ",
-            },
-          ],
-        },
-      ];
+      await promise.value;
     } catch (err) {
       console.error("Failed to load projects:", err);
-      error.value = "Failed to load projects. Please try again later.";
-    } finally {
-      loading.value = false;
     }
   }
 
@@ -96,6 +33,6 @@ export const useProjectStore = defineStore("projects", () => {
     error,
     totalProjects,
     getProjectById,
-    loadProjects
-  }
+    loadProjects,
+  };
 });
